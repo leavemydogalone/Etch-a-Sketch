@@ -8,11 +8,23 @@ function generateRandomColor() {
     //random color will be freshly served
 }
 
+// creates css grid with # of columns and rows equal to input value
+function createGrid(num) {
+    container.style["grid-template-columns"] = `repeat(${num}, 1fr)`;
+    container.style["grid-template-rows"] = `repeat(${num}, 1fr)`;
+}
+
+// clears contents of container
+function clearBox() {
+    container.innerHTML = "";
+}
+
 // create an array for the boxes so they can be called upon using 
 // their individual [i] value in the following loop.
 const boxArr = [];
 
-// loop to append new boxes to container, 
+// loop to create initial 256 boxes to fit in 16x16 grid. appends each
+// new div to the end of the parent container
 function createBoxes () {
     for(let i = 0; i < 256; i++) {
         boxArr[i] = document.createElement('div');
@@ -20,12 +32,28 @@ function createBoxes () {
         // boxArr[i].style.backgroundColor = generateRandomColor();
         container.appendChild(boxArr[i]);
     }
+}
 
+function createNewBoxes (sideLength) {
+    for(let i = 0; i < sideLength; i++) {
+        boxArr[i] = document.createElement('div');
+        boxArr[i].classList.add('box');
+        // boxArr[i].style.backgroundColor = generateRandomColor();
+        container.appendChild(boxArr[i]);
+    }
 }
 
 createBoxes();
 
 
-// document.getElementsByClassName('.box').addEventListener('click', function(){
-//     document.getElementsByClassName('.box').style.backgroundColor = 'black';
-// });
+
+function resize ()  {
+    clearBox();
+    let num = prompt('Please enter new side length:', '');
+    createGrid(num);
+
+    createNewBoxes(Math.pow(num, 2));
+}
+
+
+
